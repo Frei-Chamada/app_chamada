@@ -1,4 +1,304 @@
+import React from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { PieChart, BarChart } from 'react-native-chart-kit';
+import { Picker } from '@react-native-picker/picker';
+
+const screenWidth = Dimensions.get('window').width;
+
+export default function Stats() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Estatísticas</Text>
+
+      <View style={styles.filters}>
+        <View style={styles.pickerBox}>
+          <Picker>
+            <Picker.Item label="Todas" value="all" />
+          </Picker>
+        </View>
+        <View style={styles.pickerBox}>
+          <Picker>
+            <Picker.Item label="Últimos 30 dias" value="30days" />
+          </Picker>
+        </View>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.subtitle}>Resumo de presença</Text>
+
+        <View style={styles.pieRow}>
+          <PieChart
+            data={[
+              {
+                name: 'Falta',
+                population: 15,
+                color: '#007bff',
+                legendFontColor: '#000',
+                legendFontSize: 0,
+              },
+              {
+                name: 'Presença',
+                population: 85,
+                color: '#eee',
+                legendFontColor: '#000',
+                legendFontSize: 0,
+              }
+            ]}
+            width={140}
+            height={140}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            hasLegend={false}
+            chartConfig={{
+              color: () => '#000'
+            }}
+          />
+
+          <View style={styles.presencaBox}>
+            <Text style={styles.presencaPercent}>85%</Text>
+            <Text style={styles.presencaText}>Presença</Text>
+          </View>
+        </View>
+
+        <BarChart
+          data={{
+            labels: ['S', 'T', 'Q', 'Q', 'S', 'S'],
+            datasets: [{ data: [30, 50, 40, 60, 70, 75] }],
+          }}
+          width={screenWidth - 60}
+          height={200}
+          chartConfig={{
+            backgroundColor: '#fff',
+            backgroundGradientFrom: '#fff',
+            backgroundGradientTo: '#fff',
+            decimalPlaces: 0,
+            color: () => '#007bff',
+            labelColor: () => '#000',
+          }}
+          style={{ marginTop: 10 }}
+          fromZero
+          showBarTops
+        />
+      </View>
+
+      <TouchableOpacity style={styles.exportButton}>
+        <Text style={styles.exportText}>Exportar</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff'
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 25
+  },
+  filters: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20
+  },
+  pickerBox: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    width: '48%',
+    backgroundColor: '#f9f9f9',
+  },
+  card: {
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#eee',
+    padding: 15,
+    backgroundColor: '#fff',
+    marginBottom: 20
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  pieRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  presencaBox: {
+    marginLeft: 20
+  },
+  presencaPercent: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  presencaText: {
+    fontSize: 16
+  },
+  exportButton: {
+    borderWidth: 1.5,
+    borderColor: '#007bff',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center'
+  },
+  exportText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#007bff'
+  }
+});
+
+
 /*
+TELA AJUSTES
+
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+export default function Settings({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Ajustes</Text>
+
+      <TouchableOpacity style={styles.card}>
+        <Ionicons name="sunny-outline" size={24} color="#333" style={styles.icon} />
+        <Text style={styles.text}>Mudar tema</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.card}>
+        <Ionicons name="arrow-forward-circle-outline" size={24} color="#333" style={styles.icon} />
+        <Text style={styles.text}>Sair</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 20
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 30
+  },
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#eee',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12
+  },
+  icon: {
+    marginRight: 12
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: '500'
+  }
+});
+
+*/
+
+/*
+TELA MINHAS TURMAS
+
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+
+export default function MyClasses({ navigation }) {
+  const turmas = [
+    { nome: 'Informática A', turno: 'Manhã' },
+    { nome: 'Informática B', turno: 'Manhã' },
+    { nome: 'Informática C', turno: 'Tarde' },
+    { nome: 'Informática D', turno: 'Tarde' },
+  ];
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Minhas Turmas</Text>
+
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {turmas.map((turma, index) => (
+          <View key={index} style={styles.card}>
+            <Text style={styles.turmaNome}>{turma.nome}</Text>
+            <Text style={styles.turmaTurno}>{turma.turno}</Text>
+          </View>
+        ))}
+
+        <TouchableOpacity style={styles.btnVoltar} onPress={() => navigation.goBack()}>
+          <Text style={styles.btnVoltarText}>Voltar</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff'
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 30
+  },
+  scrollContent: {
+    paddingBottom: 20
+  },
+  card: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12
+  },
+  turmaNome: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  turmaTurno: {
+    fontSize: 16,
+    color: '#555'
+  },
+  btnVoltar: {
+    backgroundColor: '#eee',
+    padding: 15,
+    alignItems: 'center',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#aaa',
+    marginTop: 10
+  },
+  btnVoltarText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#333'
+  }
+});
+
+*/
+
+/*
+TELA DE PRESENÇAS
 
 import { useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
@@ -244,7 +544,8 @@ const styles = StyleSheet.create({
 
 
 
-
+/*
+TELA LOGIN
 
 import { useState } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
@@ -363,3 +664,4 @@ const styles = StyleSheet.create({
   },
 });
 
+*/
